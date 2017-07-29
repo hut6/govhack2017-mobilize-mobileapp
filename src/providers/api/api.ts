@@ -12,17 +12,20 @@ export class ApiProvider {
   }
 
   getEmergencies() {
+    return this.get('/emergencies');
+    /* return the promise and let the endpoint handle errors
     this.get('/emergencies').then(data => {
       return data;
     }).catch(err => {
       console.error(JSON.stringify(err))
       return [];
     });
+    */
   }
 
   get(url) {
     return new Promise((accept) => {
-      this.http.get(url)
+      this.http.get(this.root + url)
         .map(res => res.json())
         .subscribe(data => {
           accept(data)

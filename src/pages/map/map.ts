@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Http } from '@angular/http';
 import {ApiProvider} from "../../providers/api/api";
 
 
@@ -12,22 +13,29 @@ import {ApiProvider} from "../../providers/api/api";
 
 declare var google;
 let markers = [];
+let map;
+const userLoc = {lat: -23.7024816, lng: 133.8781419}; //hard coded to alice springs for now
+let icons;
+const iconBase = '/assets/map-icons/';
 
-let iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-
-let icons = {
-  parking: {
-    icon: iconBase + 'parking_lot_maps.png'
-  },
-  library: {
-    icon: iconBase + 'library_maps.png'
-  },
-  info: {
-    icon: iconBase + 'info-i_maps.png'
-  }
+const mapIcon = {
+  //pfes icons (could be others)
+  'Smoke Complaint/Illegal Burn': 'fire',
+  'Automatic Fire Alarm': 'alarm',
+  'Grass and Scrub Fire': 'bushfire',
+  'Structure Fire': 'housefire',
+  'Vehicle Fire': 'carfire',
+  'Non Structure Fire': 'bushfire',
+  'Road Crash': 'carcrash',
+  //mobilizer icons
+  'House Fire': 'housefire',
+  'Bush Fire': 'bushfire',
+  'Burn Off': 'controlled',
+  'Car Crash': 'carcrash',
+  'Medical Emergency': 'health',
+  'Search & Rescue': 'search',
+  'Amber Alert': 'amber'
 };
-
-
 
 @IonicPage()
 @Component({
@@ -36,50 +44,215 @@ let icons = {
 })
 export class MapPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public api: ApiProvider) {}
 
   ionViewDidLoad() {
     this.initMap();
-    console.log('ionViewDidLoad MapPage');
+    this.addWebData();
+    this.addData();
   }
 
   initMap() {
 
-    // default to alice springs, get actual data
-    let location = {lat: -23.7024816, lng: 133.8781419};
+    icons = this.getIcons();
 
-    let map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
-      center: location
-    });
-    markers.push ({
-        m: new google.maps.Marker({
-            position: {lat: -23.7022816, lng: 133.8780419},
-            map: map,
-            //icon: icons['info'].icon,
-            title: "test",
-            //animation: google.maps.Animation.DROP,
-            label: "L"
-          }),
-        i: new google.maps.InfoWindow({
-            content: "<div class='info'>" +
-            "<h1>Incident Title</h1>" +
-            "<h2>Distance</h2>" +
-            "<p>Words words words</p>" +
-            "</div>"
-        })
+      center: userLoc
     });
 
-    markers.forEach(function (marker){
-        let info=marker.i;
-        marker.m.addListener('click', function() {
-            marker.i.open(map, marker.m);
-        });
-    })
+    let userMarker = {
+      m: new google.maps.Marker({
+        position: userLoc,
+        map: map,
+        icon: icons['current'].icon,
+        title: "current location",
+      })
+    };
 
   }
 
+  addData (){
+    this.api.getEmergencies().then(data => {
+
+      for (let i in data){
+
+        let incident=data[i];
+
+        let loc = { lat: Number(incident.lat), lng: Number(incident.lon) };
+        let dist = getDist(loc, userLoc).toFixed(2);
+
+        markers.push ({
+          m: new google.maps.Marker({
+            position: loc,
+            map: map,
+            icon: icons[mapIcon[incident.type]].icon,
+            title: incident.eventtype,
+          }),
+          i: new google.maps.InfoWindow({
+            content: "" +
+            "<div class='info'>" +
+            "<h5>"+incident.type+"</h5>" +
+            "<p>"+new Date(incident.created.date)+"</p>" +
+            //"<p>"+incident.location +
+            "<strong>("+dist+" km)</strong></p>" +
+            "<p>"+incident.description+"</p>" +
+            //"<p>"+incident.skills+"</p>" +
+            "</div>"
+          })
+        });
+      }
+
+      this.addListeners()
+
+    }).catch(err => {
+
+      console.error(JSON.stringify(err));
+
+    });
+  }
+
+  addWebData(){
+    this.http.get('http://www.pfes.nt.gov.au/incidentmap/json/ntfrsincidents.json').map(res => res.json()).subscribe(data => {
+      data.incidents.forEach(function (incident){
+
+        //if (incident.status == 'closed') return;
+
+        let loc = {lat: Number(incident.coordinate.split(',')[0]), lng: Number(incident.coordinate.split(',')[1]) };
+        let dist = getDist(loc, userLoc).toFixed(2);
+
+        markers.push ({
+          m: new google.maps.Marker({
+            position: loc,
+            map: map,
+            icon: icons[mapIcon[incident.eventtype]].icon,
+            title: incident.eventtype,
+          }),
+          i: new google.maps.InfoWindow({
+            content: "" +
+            "<div class='info'>" +
+            "<h5>"+incident.eventtype+" ("+incident.category+")</h5>" +
+            "<p>"+new Date(incident.datenotified)+"</p>" +
+            "<p>"+incident.location +
+            "<strong>("+dist+" km)</strong></p>" +
+            "<p>"+incident.eventtype+"</p>" +
+            "<p>"+incident.status+"</p>" +
+            "</div>"
+          })
+        });
+
+      });
+
+      this.addListeners()
+
+    });
+  }
+
+  addListeners(){
+    markers.forEach(function (marker) {
+      marker.m.addListener('click', function () {
+        marker.i.open(map, marker.m);
+      });
+    })
+  };
 
 
 
+  getIcons(){
+    return {
+      current: {
+        icon: {
+          url: iconBase + 'carcrash.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },alarm: {
+        icon: {
+          url: iconBase + 'alarm.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },alert: {
+        icon: {
+          url: iconBase + 'alert.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },amber: {
+        icon: {
+          url: iconBase + 'amber.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },bushfire: {
+        icon: {
+          url: iconBase + 'bushfire.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },carcrash: {
+        icon: {
+          url: iconBase + 'carcrash.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },controlled: {
+        icon: {
+          url: iconBase + 'controlled.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },health: {
+        icon: {
+          url: iconBase + 'health.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },housefire: {
+        icon: {
+          url: iconBase + 'housefire.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },search: {
+        icon: {
+          url: iconBase + 'search.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+        }
+      },carfire: {
+      icon: {
+        url: iconBase + 'carfire.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+      }
+    },fire: {
+      icon: {
+        url: iconBase + 'fire.png',
+          size: new google.maps.Size(40, 40),
+          scaledSize: new google.maps.Size(40, 40)
+      }
+    },
+    };
+  }
+
+}
+
+
+let getDist = function (loc1,loc2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(loc2.lat-loc1.lat);  // deg2rad below
+  var dLon = deg2rad(loc2.lng-loc2.lng);
+  var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(loc1.lat)) * Math.cos(deg2rad(loc2.lat)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+  ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c; // Distance in km
+  return d;
+};
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
 }

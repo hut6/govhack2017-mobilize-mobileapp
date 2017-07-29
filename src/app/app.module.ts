@@ -11,6 +11,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {MapPage} from "../pages/map/map";
 import {ProfilePage} from "../pages/profile/profile";
 import { ApiProvider } from '../providers/api/api';
+import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ApiProvider } from '../providers/api/api';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
