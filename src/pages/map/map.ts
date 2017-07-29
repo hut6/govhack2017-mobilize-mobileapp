@@ -43,20 +43,38 @@ export class MapPage {
   }
 
   initMap() {
-    console.log("init")
-    let uluru = {lat: -19.1340996, lng: 133.7194545};
+
+    // default to alice springs, get actual data
+    let location = {lat: -23.7024816, lng: 133.8781419};
+
     let map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 5,
-      center: uluru
+      zoom: 14,
+      center: location
+    });
+    markers.push ({
+        m: new google.maps.Marker({
+            position: {lat: -23.7022816, lng: 133.8780419},
+            map: map,
+            //icon: icons['info'].icon,
+            title: "test",
+            //animation: google.maps.Animation.DROP,
+            label: "L"
+          }),
+        i: new google.maps.InfoWindow({
+            content: "<div class='info'>" +
+            "<h1>Incident Title</h1>" +
+            "<h2>Distance</h2>" +
+            "<p>Words words words</p>" +
+            "</div>"
+        })
     });
 
-    markers.push (
-      new google.maps.Marker({
-        position: uluru,
-        map: map,
-        icon: icons['info'].icon
-      })
-    );
+    markers.forEach(function (marker){
+        let info=marker.i;
+        marker.m.addListener('click', function() {
+            marker.i.open(map, marker.m);
+        });
+    })
 
   }
 
