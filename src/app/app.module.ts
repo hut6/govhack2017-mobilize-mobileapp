@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {MapPage} from "../pages/map/map";
 import {ProfilePage} from "../pages/profile/profile";
+import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {ProfilePage} from "../pages/profile/profile";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ApiProvider
   ]
 })
 export class AppModule {}

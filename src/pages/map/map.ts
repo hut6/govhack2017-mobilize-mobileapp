@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {ApiProvider} from "../../providers/api/api";
 
 
 /**
@@ -35,7 +36,7 @@ let icons = {
 })
 export class MapPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {}
 
   ionViewDidLoad() {
     this.initMap();
