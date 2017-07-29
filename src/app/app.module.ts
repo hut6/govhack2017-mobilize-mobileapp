@@ -9,6 +9,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {MapPage} from "../pages/map/map";
+import {ReportPage} from "../pages/report/report";
 import {ProfilePage} from "../pages/profile/profile";
 import { ApiProvider } from '../providers/api/api';
 import {HttpModule} from "@angular/http";
@@ -18,6 +19,7 @@ import {HttpModule} from "@angular/http";
     MyApp,
     MapPage,
     ProfilePage,
+    ReportPage,
     HomePage,
     TabsPage
   ],
@@ -30,6 +32,7 @@ import {HttpModule} from "@angular/http";
   entryComponents: [
     MyApp,
     MapPage,
+    ReportPage,
     ProfilePage,
     HomePage,
     TabsPage

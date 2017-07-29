@@ -13,7 +13,7 @@ export class ApiProvider {
 
   getEmergencies() {
     return this.get('/emergencies');
-    /* return the promise and let the endpoint handle errors
+    /*
     this.get('/emergencies').then(data => {
       return data;
     }).catch(err => {

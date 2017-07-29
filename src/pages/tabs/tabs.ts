@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { HomePage } from '../home/home';
 import {MapPage} from "../map/map";
+import {ReportPage} from "../report/report";
 import {ProfilePage} from "../profile/profile";
 
 @Component({
@@ -11,7 +12,8 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = MapPage;
-  tab3Root = ProfilePage;
+  tab3Root = ReportPage;
+  tab4Root = ProfilePage;
 
   constructor() {
 

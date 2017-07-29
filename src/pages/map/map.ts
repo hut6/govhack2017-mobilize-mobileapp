@@ -11,13 +11,14 @@ import {ApiProvider} from "../../providers/api/api";
  * on Ionic pages and navigation.
  */
 
-declare var google;
-let markers = [];
+declare const google;
 let map;
 const userLoc = {lat: -23.7024816, lng: 133.8781419}; //hard coded to alice springs for now
-let icons;
-const iconBase = '/assets/map-icons/';
 
+let markers = [];
+let icons;
+
+const iconBase = '/assets/map-icons/';
 const mapIcon = {
   //pfes icons (could be others)
   'Smoke Complaint/Illegal Burn': 'fire',
@@ -50,6 +51,7 @@ export class MapPage {
     this.initMap();
     this.addWebData();
     this.addData();
+    console.log('ionViewDidLoad MapPage');
   }
 
   initMap() {
@@ -65,7 +67,6 @@ export class MapPage {
       m: new google.maps.Marker({
         position: userLoc,
         map: map,
-        icon: icons['current'].icon,
         title: "current location",
       })
     };
@@ -221,18 +222,18 @@ export class MapPage {
           scaledSize: new google.maps.Size(40, 40)
         }
       },carfire: {
-      icon: {
-        url: iconBase + 'carfire.png',
+        icon: {
+          url: iconBase + 'carfire.png',
           size: new google.maps.Size(40, 40),
           scaledSize: new google.maps.Size(40, 40)
-      }
-    },fire: {
-      icon: {
-        url: iconBase + 'fire.png',
+        }
+      },fire: {
+        icon: {
+          url: iconBase + 'fire.png',
           size: new google.maps.Size(40, 40),
           scaledSize: new google.maps.Size(40, 40)
-      }
-    },
+        }
+      },
     };
   }
 
