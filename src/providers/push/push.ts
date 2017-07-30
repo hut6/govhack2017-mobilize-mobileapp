@@ -11,7 +11,7 @@ export class PushProvider {
   }
 
   getPush() {
-    this.api.get('');
+    this.api.getNotifications().then;
   }
 
 }

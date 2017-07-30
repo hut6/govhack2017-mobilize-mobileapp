@@ -13,19 +13,20 @@ export class ApiProvider {
 
   getEmergencies() {
     return this.get('/emergencies');
-    /*
-    this.get('/emergencies').then(data => {
-      return data;
-    }).catch(err => {
-      console.error(JSON.stringify(err))
-      return [];
-    });
-    */
+  }
+
+  getNotifications() {
+    return this.get('/notifications/'+localStorage.getItem("email"));
+  }
+
+  markNotificationRead(id) {
+    return this.get('/notifications/'+id+'/read/');
   }
 
   get(url) {
     return new Promise((accept) => {
-      this.http.get(this.root + url)
+      url = this.root + url;
+      this.http.get(url.toString())
         .map(res => res.json())
         .subscribe(data => {
           accept(data)
