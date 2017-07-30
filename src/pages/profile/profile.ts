@@ -13,7 +13,6 @@ export class ProfilePage {
   }
 
   saveEmail() {
-    localStorage.setItem('email', this.email);
 
     let alert = this.alertCtrl.create({
       title: 'Saved',

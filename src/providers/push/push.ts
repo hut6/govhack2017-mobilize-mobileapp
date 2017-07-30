@@ -29,13 +29,13 @@ export class PushProvider {
             {
               text: 'Reject',
               handler: data => {
-                console.log('Reject clicked');
+                this.api.markNotificationReject(notification.id);
               }
             },
             {
               text: 'Accept',
               handler: data => {
-                console.log('Accept clicked');
+                this.api.markNotificationAccept(notification.id);
               }
             }
           ];
@@ -57,7 +57,6 @@ export class PushProvider {
           buttons: this.buttons
         });
         prompt.present();
-        console.log(notification.id);
         this.api.markNotificationRead(notification.id);
       })
     });
