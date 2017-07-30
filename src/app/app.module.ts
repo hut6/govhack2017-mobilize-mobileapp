@@ -12,6 +12,7 @@ import {MapPage} from "../pages/map/map";
 import {ReportPage} from "../pages/report/report";
 import {ProfilePage} from "../pages/profile/profile";
 import { ApiProvider } from '../providers/api/api';
+import { PushProvider } from '../providers/push/push';
 import {HttpModule} from "@angular/http";
 
 @NgModule({
@@ -41,7 +42,8 @@ import {HttpModule} from "@angular/http";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ApiProvider
+    ApiProvider,
+    PushProvider
   ]
 })
 export class AppModule {}
