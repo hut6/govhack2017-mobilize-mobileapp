@@ -11,7 +11,9 @@ export class PushProvider {
   }
 
   getPush() {
-    this.api.getNotifications().then;
+    this.api.getNotifications().then(data => {
+
+    });
   }
 
 }
