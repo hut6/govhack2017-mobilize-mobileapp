@@ -33,7 +33,7 @@ export class ReportPage {
 
     map = new google.maps.Map(document.getElementById('reportmap'), {
       zoom: 14,
-      center: this.userLoc
+      center: userLoc
     });
 
     map.addListener('click', function(event) {
