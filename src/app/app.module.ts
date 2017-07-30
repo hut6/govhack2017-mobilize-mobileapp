@@ -43,7 +43,7 @@ import {HttpModule} from "@angular/http";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
-    PushProvider
+    PushProvider,
   ]
 })
 export class AppModule {}

@@ -10,7 +10,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 declare const google;
 let map;
-let reportLoc = [];
+let reportLoc;
 let userLoc;
 
 @IonicPage()
@@ -37,19 +37,22 @@ export class ReportPage {
     });
 
     map.addListener('click', function(event) {
-
-      this.reportLoc = new google.maps.Marker({
-        position: event.latLng,
-        map: map
-      });
-
+        addMarker(event.latLng);
     });
 
+    function addMarker(loc){
+      if (!reportLoc) {
+        reportLoc = new google.maps.Marker({
+          position: loc,
+          map: map,
+          draggable: true
+        });
+      } else {
+        reportLoc.setPosition(loc);
+      };
+    }
   }
 
-
 }
-
-
 
 

@@ -18,7 +18,7 @@ const userLoc = {lat: -23.7024816, lng: 133.8781419}; //hard coded to alice spri
 let markers = [];
 let icons;
 
-const iconBase = '/assets/map-icons/';
+const iconBase = 'https://mobilize.team/m/assets/map-icons/';
 const mapIcon = {
   //pfes icons (could be others)
   'Smoke Complaint/Illegal Burn': 'fire',
@@ -87,7 +87,7 @@ export class MapPage {
           m: new google.maps.Marker({
             position: loc,
             map: map,
-            //icon: icons[mapIcon[incident.type]].icon,
+            icon: icons[mapIcon[incident.type]].icon,
             title: incident.eventtype,
           }),
           i: new google.maps.InfoWindow({
@@ -126,7 +126,7 @@ export class MapPage {
           m: new google.maps.Marker({
             position: loc,
             map: map,
-            //icon: icons[mapIcon[incident.eventtype]].icon,
+            icon: icons[mapIcon[incident.eventtype]].icon,
             title: incident.eventtype,
           }),
           i: new google.maps.InfoWindow({
