@@ -4,6 +4,7 @@ import { HomePage } from '../home/home';
 import {MapPage} from "../map/map";
 import {ReportPage} from "../report/report";
 import {ProfilePage} from "../profile/profile";
+import {PushProvider} from "../../providers/push/push";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -15,7 +16,9 @@ export class TabsPage {
   tab3Root = ReportPage;
   tab4Root = ProfilePage;
 
-  constructor() {
-
+  constructor(public push: PushProvider) {
+    setInterval(()=>{
+      this.push.getPush();
+    }, 10000);
   }
 }

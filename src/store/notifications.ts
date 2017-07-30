@@ -1,7 +1,8 @@
+import {Enrolment} from "./enrolment";
 
-export class Notifications {
+export class Notification {
   id: string;
-  enrolment: string;
-  type: string;
+  enrollment: Enrolment;
+  category: any;
   sent: any;
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {Emergency} from "../../store/emergency";
 
 @Injectable()
 export class ApiProvider {
@@ -21,7 +20,7 @@ export class ApiProvider {
   }
 
   markNotificationRead(id) {
-    return this.get('/notifications/'+id+'/read/');
+    return this.get('/notifications/'+id.toString()+'/read');
   }
 
   get(url) {
