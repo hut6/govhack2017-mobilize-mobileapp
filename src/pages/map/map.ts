@@ -137,7 +137,7 @@ export class MapPage {
             "<p>"+incident.location +
             "<strong>("+dist+" km)</strong></p>" +
             "<p>"+incident.eventtype+"</p>" +
-            "<p>"+incident.status+"</p>" +
+            //"<p>"+incident.status+"</p>" +
             "</div>"
           })
         });
