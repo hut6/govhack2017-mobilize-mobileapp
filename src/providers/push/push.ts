@@ -53,7 +53,7 @@ export class PushProvider {
 
         let prompt = this.alertCtrl.create({
           title: this.title,
-          message: this.message,
+          message: this.message+"<br/>Can you attend?",
           buttons: this.buttons
         });
         prompt.present();
