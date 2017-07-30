@@ -99,6 +99,7 @@ export class MapPage {
             "<strong>("+dist+" km)</strong></p>" +
             "<p>"+incident.description+"</p>" +
             //"<p>"+incident.skills+"</p>" +
+            "<p>Mobilizer Data</p>" +
             "</div>"
           })
         });
@@ -137,7 +138,7 @@ export class MapPage {
             "<p>"+incident.location +
             "<strong>("+dist+" km)</strong></p>" +
             "<p>"+incident.eventtype+"</p>" +
-            //"<p>"+incident.status+"</p>" +
+            "<p>PFES Data</p>" +
             "</div>"
           })
         });
