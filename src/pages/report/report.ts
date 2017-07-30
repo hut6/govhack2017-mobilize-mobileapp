@@ -20,6 +20,10 @@ let userLoc;
 })
 export class ReportPage {
 
+  description: string = '';
+  location: string = '';
+  photo: object = {};
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -37,20 +41,22 @@ export class ReportPage {
     });
 
     map.addListener('click', function(event) {
-        addMarker(event.latLng);
+        this.addMarker(event.latLng);
     });
 
-    function addMarker(loc){
-      if (!reportLoc) {
-        reportLoc = new google.maps.Marker({
-          position: loc,
-          map: map,
-          draggable: true
-        });
-      } else {
-        reportLoc.setPosition(loc);
-      };
-    }
+  }
+
+  addMarker = function(loc){
+    if (!reportLoc) {
+      reportLoc = new google.maps.Marker({
+        position: loc,
+        map: map,
+        draggable: true
+      });
+    } else {
+      reportLoc.setPosition(loc);
+    };
+    this.location = JSON.stringify(loc);
   }
 
 }

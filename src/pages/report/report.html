@@ -17,17 +17,20 @@
   <ion-list>
     <ion-item>
       <ion-label stacked>Incident Description:</ion-label>
-      <ion-textarea> </ion-textarea>
+      <ion-textarea name="description"> </ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label stacked>Incident Location</ion-label>
     </ion-item>
     <ion-item>
       <div id="reportmap"> </div>
-      
-
-      <button ion-button full>Submit Report</button>
     </ion-item>
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="location" ></ion-input>
+      <ion-label stacked>Photo:</ion-label>
+      <ion-input type="file" name="photo" accept="image/*"></ion-input>
+    </ion-item>
+    <button ion-button full>Submit Report</button>
 
   </ion-list>
 
