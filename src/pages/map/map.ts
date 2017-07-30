@@ -87,7 +87,7 @@ export class MapPage {
           m: new google.maps.Marker({
             position: loc,
             map: map,
-            icon: icons[mapIcon[incident.type]].icon,
+            //icon: icons[mapIcon[incident.type]].icon,
             title: incident.eventtype,
           }),
           i: new google.maps.InfoWindow({
@@ -126,7 +126,7 @@ export class MapPage {
           m: new google.maps.Marker({
             position: loc,
             map: map,
-            icon: icons[mapIcon[incident.eventtype]].icon,
+            //icon: icons[mapIcon[incident.eventtype]].icon,
             title: incident.eventtype,
           }),
           i: new google.maps.InfoWindow({

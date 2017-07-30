@@ -10,6 +10,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 declare const google;
 let map;
+let reportLoc = [];
+let userLoc;
 
 @IonicPage()
 @Component({
@@ -18,12 +20,7 @@ let map;
 })
 export class ReportPage {
 
-  reportLoc: any;
-  userLoc: any;
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    let reportLoc = [];
-    let userLoc;
   }
 
   ionViewDidLoad() {
@@ -32,7 +29,7 @@ export class ReportPage {
   }
 
   initMap() {
-    this.userLoc = {lat: -23.7024816, lng: 133.8781419}; //hard coded to alice springs for now
+    userLoc = {lat: -23.7024816, lng: 133.8781419}; //hard coded to alice springs for now
 
     map = new google.maps.Map(document.getElementById('reportmap'), {
       zoom: 14,
