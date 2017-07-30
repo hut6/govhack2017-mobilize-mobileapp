@@ -5,7 +5,7 @@ import {Emergency} from "../../store/emergency";
 
 @Injectable()
 export class ApiProvider {
-  root: string = 'https://2017-volunteers-govhack/api/v1';
+  root: string = 'https://mobilize.team/api/v1';
 
   constructor(public http: Http) {
     console.log('Api Provider Loaded');
