@@ -7,13 +7,16 @@ import {ApiProvider} from "../api/api";
 export class PushProvider {
 
   constructor(public http: Http, public api: ApiProvider) {
-    console.log('Hello PushProvider Provider');
+    console.log('Loaded Push Provider');
   }
 
   getPush() {
     this.api.getNotifications().then(data => {
-
+      // data.forEach((notification) => {
+      //   console.log(notification);
+      // });
     });
+
   }
 
 }

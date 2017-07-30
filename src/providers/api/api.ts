@@ -5,7 +5,7 @@ import {Emergency} from "../../store/emergency";
 
 @Injectable()
 export class ApiProvider {
-  root: string = 'https://mobilize.team/api/v1';
+  root: string = 'https://2017-volunteers-govhack/api/v1';
 
   constructor(public http: Http) {
     console.log('Api Provider Loaded');
@@ -16,7 +16,8 @@ export class ApiProvider {
   }
 
   getNotifications() {
-    return this.get('/notifications/'+localStorage.getItem("email"));
+    // return this.get('/notifications/'+localStorage.getItem("email"));
+    return this.get('/notifications/regan@hutsix.com.au');
   }
 
   markNotificationRead(id) {

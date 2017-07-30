@@ -19,7 +19,6 @@ let userLoc;
   templateUrl: 'report.html',
 })
 export class ReportPage {
-
   description: string = '';
   location: string = '';
   photo: object = {};
@@ -40,13 +39,13 @@ export class ReportPage {
       center: userLoc
     });
 
-    map.addListener('click', function(event) {
+    map.addListener('click', (event) => {
         this.addMarker(event.latLng);
     });
 
   }
 
-  addMarker = function(loc){
+  addMarker = loc => {
     if (!reportLoc) {
       reportLoc = new google.maps.Marker({
         position: loc,
